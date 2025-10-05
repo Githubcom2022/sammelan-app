@@ -33,9 +33,12 @@ const Sidebar = ({ setSelectedGroup }) => {
     try {
       //   const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
       const token = userContext.user.token;
-      const response = await axios.get("http://localhost:5000/api/groups", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        "https://mern-chat-backend-lso1.onrender.com/api/groups",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       console.log("Fetched groups response data:", response.data);
       setGroups(response.data);
       // const { data } = response;
@@ -65,7 +68,7 @@ const Sidebar = ({ setSelectedGroup }) => {
       //   const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
       const token = userContext.user.token;
       await axios.post(
-        "http://localhost:5000/api/groups",
+        "https://mern-chat-backend-lso1.onrender.com/api/groups",
         {
           name: newGroupName,
           description: newGroupDescription,
@@ -98,7 +101,7 @@ const Sidebar = ({ setSelectedGroup }) => {
       //   const token = userInfo.token;
       const token = userContext.user.token;
       await axios.post(
-        `http://localhost:5000/api/groups/${groupId}/join`,
+        `https://mern-chat-backend-lso1.onrender.com/api/groups/${groupId}/join`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -118,7 +121,7 @@ const Sidebar = ({ setSelectedGroup }) => {
       //   const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
       const token = userContext.user.token;
       await axios.post(
-        `http://localhost:5000/api/groups/${groupId}/leave`,
+        `https://mern-chat-backend-lso1.onrender.com/api/groups/${groupId}/leave`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

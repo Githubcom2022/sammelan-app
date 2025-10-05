@@ -53,7 +53,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
 
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/messages/${selectedGroup._id}`,
+        `https://mern-chat-backend-lso1.onrender.com/api/messages/${selectedGroup._id}`,
         {
           headers: { Authorization: `Bearer ${user.token}` },
         }
@@ -140,7 +140,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
     console.log("from sent message", user.token);
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/messages`,
+        `https://mern-chat-backend-lso1.onrender.com/api/messages`,
         {
           sender: user._id,
           content: newMessage,

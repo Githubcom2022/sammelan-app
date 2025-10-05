@@ -200,24 +200,27 @@ let Register = () => {
 
     if (isValid()) {
       try {
-        let response = await fetch("http://localhost:5000/api/users/register", {
-          method: "POST",
-          body: JSON.stringify({
-            email: state.email,
-            password: state.password,
-            username: state.username,
-            dateOfBirth: state.dateOfBirth,
-            gender: state.gender,
-            //country: state.country,
-            // country:
-            //   countries.find((c) => c.id.toString() === state.country)
-            //     ?.countryName || "",
-            receiveNewsLetters: state.receiveNewsLetters,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        let response = await fetch(
+          "https://mern-chat-backend-lso1.onrender.com/api/users/register",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              email: state.email,
+              password: state.password,
+              username: state.username,
+              dateOfBirth: state.dateOfBirth,
+              gender: state.gender,
+              //country: state.country,
+              // country:
+              //   countries.find((c) => c.id.toString() === state.country)
+              //     ?.countryName || "",
+              receiveNewsLetters: state.receiveNewsLetters,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (response.ok) {
           setMessage(

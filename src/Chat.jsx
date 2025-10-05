@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "./UserContext";
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "https://mern-chat-backend-lso1.onrender.com";
 
 const Chat = () => {
   const [selectedGroup, setSelectedGroup] = useState(null);
