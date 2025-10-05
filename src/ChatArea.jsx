@@ -2,9 +2,7 @@
 
 import React, { useEffect, useRef, useState, useContext } from "react";
 import axios from "axios";
-import UsersList from "./UserList";
-import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom"; // if needed for navigation
+import UsersList from "./UserList"; // if needed for navigation
 import { UserContext } from "./UserContext";
 
 const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
@@ -60,7 +58,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
           headers: { Authorization: `Bearer ${user.token}` },
         }
       );
-      console.log("From chate area Fetched messages:", data);
+      // console.log("From chate area Fetched messages:", data);
       setMessages(data);
     } catch (error) {
       console.error("Error fetching messages:", error);
@@ -123,7 +121,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
         socket.off("user stop typing");
       };
     }
-  }, [selectedGroup, socket, alert]);
+  }, [selectedGroup, socket, setSelectedGroup, messages]);
 
   const formatTime = (dateStr) => {
     try {

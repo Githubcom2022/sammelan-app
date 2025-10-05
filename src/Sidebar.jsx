@@ -57,7 +57,7 @@ const Sidebar = ({ setSelectedGroup }) => {
   useEffect(() => {
     checkAdminStatus();
     fetchGroups();
-  }, []);
+  }, [isAdmin, groups]);
 
   // ✅ Create group
   const handleCreateGroup = async () => {

@@ -1,5 +1,4 @@
 import { React, useState } from "react";
-import { Switch } from "react-router";
 import Login from "./Login";
 import Register from "./Registration"; // Make sure to uncomment this if you need it
 //import RegisterForm from "./RegisterForm";

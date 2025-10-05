@@ -11,19 +11,19 @@ const Chat = () => {
   const [socket, setSocket] = useState(null);
   const userContext = useContext(UserContext);
   useEffect(() => {
-    console.log("user from chat", userContext.user);
+    // console.log("user from chat", userContext.user);
     // const userInfo = JSON.parse(localStorage.getItem("UserContext") || "{}");
     const newSocket = io(ENDPOINT, {
       auth: { user: userContext.user },
     });
-    console.log("Socket connected:", newSocket);
+    // console.log("Socket connected:", newSocket);
     setSocket(newSocket);
     return () => {
       if (newSocket) {
         newSocket.disconnect();
       }
     };
-  }, []);
+  }, [socket, userContext]);
 
   return (
     <div className="container-fluid vh-100">
