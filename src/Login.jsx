@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "./UserContext";
+import URL from "./Url";
 
 let Login = (props) => {
   var [email, setEmail] = useState("bhole@bhole.com");
@@ -113,10 +114,10 @@ let Login = (props) => {
         //   body: JSON.stringify({ email, password }),
         // });
 
-        let response = await axios.post(
-          "https://mern-chat-backend-lso1.onrender.com/api/users/login",
-          { email, password }
-        );
+        let response = await axios.post(`${URL}/api/users/login`, {
+          email,
+          password,
+        });
         // console.log("from login response", response);
         if (response.status === 200) {
           // Store user in localStorage
@@ -126,7 +127,7 @@ let Login = (props) => {
           // Status code is 200
           console.log("Login success:");
           let responseBody = response.data;
-          console.log("from login responseBody", responseBody);
+          // console.log("from login responseBody", responseBody);
           if (response.status === 200 && responseBody && responseBody._id) {
             userContext.setUser({
               ...userContext.user,

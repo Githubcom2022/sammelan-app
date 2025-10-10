@@ -1,8 +1,9 @@
 import { useEffect, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "./UserContext";
+import URL from "./Url";
 
 const Sidebar = ({ setSelectedGroup }) => {
   const [newGroupName, setNewGroupName] = useState("");
@@ -10,10 +11,11 @@ const Sidebar = ({ setSelectedGroup }) => {
   const [userGroups, setUserGroups] = useState([]);
   const [newGroupDescription, setNewGroupDescription] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+
   let userContext = useContext(UserContext);
 
-  console.log("UserContext in Sidebar id:", userContext.user.isAdmin);
+  // console.log("UserContext in Sidebar id:", userContext.user.isAdmin);
 
   // ✅ Check admin
   const checkAdminStatus = () => {
@@ -33,13 +35,10 @@ const Sidebar = ({ setSelectedGroup }) => {
     try {
       //   const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
       const token = userContext.user.token;
-      const response = await axios.get(
-        "https://mern-chat-backend-lso1.onrender.com/api/groups",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      console.log("Fetched groups response data:", response.data);
+      const response = await axios.get(`${URL}/api/groups`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      // console.log("Fetched groups response data:", response.data);
       setGroups(response.data);
       // const { data } = response;
       const userGroupIds = response.data
@@ -50,7 +49,7 @@ const Sidebar = ({ setSelectedGroup }) => {
         })
         .map((group) => group?._id);
 
-      console.log("User's groupsIds:", userGroupIds);
+      // console.log("User's groupsIds:", userGroupIds);
       setUserGroups(userGroupIds);
     } catch (error) {
       console.error(error);
@@ -60,7 +59,7 @@ const Sidebar = ({ setSelectedGroup }) => {
   useEffect(() => {
     checkAdminStatus();
     fetchGroups();
-  }, [isAdmin, groups]);
+  }, []);
 
   // ✅ Create group
   const handleCreateGroup = async () => {
@@ -68,7 +67,7 @@ const Sidebar = ({ setSelectedGroup }) => {
       //   const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
       const token = userContext.user.token;
       await axios.post(
-        "https://mern-chat-backend-lso1.onrender.com/api/groups",
+        `${URL}/api/groups`,
         {
           name: newGroupName,
           description: newGroupDescription,
@@ -89,9 +88,21 @@ const Sidebar = ({ setSelectedGroup }) => {
   };
 
   // ✅ Logout
-  const handleLogout = () => {
-    // localStorage.removeItem("userInfo");
-    navigate("/login");
+  // const handleLogout = () => {
+  //   // localStorage.removeItem("userInfo");
+  //    navigate("/login", { replace: true });
+
+  // };
+  let handleLogout = (event) => {
+    event.preventDefault();
+
+    userContext.setUser({
+      isLoggedIn: false,
+      _id: null,
+      username: null,
+    });
+
+    window.location.hash = "/";
   };
 
   // ✅ Join group
@@ -101,7 +112,7 @@ const Sidebar = ({ setSelectedGroup }) => {
       //   const token = userInfo.token;
       const token = userContext.user.token;
       await axios.post(
-        `https://mern-chat-backend-lso1.onrender.com/api/groups/${groupId}/join`,
+        `${URL}/api/groups/${groupId}/join`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -121,7 +132,7 @@ const Sidebar = ({ setSelectedGroup }) => {
       //   const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
       const token = userContext.user.token;
       await axios.post(
-        `https://mern-chat-backend-lso1.onrender.com/api/groups/${groupId}/leave`,
+        `${URL}/api/groups/${groupId}/leave`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

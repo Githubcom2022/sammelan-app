@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState, useContext } from "react";
 import axios from "axios";
 import UsersList from "./UserList"; // if needed for navigation
 import { UserContext } from "./UserContext";
+import URL from "./Url";
 
 const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
   // console.log(connectedUsers);
@@ -20,7 +21,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
   try {
     // const storedUser = localStorage.getItem("userContext");
     currentUser = userContext.user ? userContext.user : null;
-    console.log("CurrentUser from Chat Area:", currentUser);
+    // console.log("CurrentUser from Chat Area:", currentUser);
   } catch (e) {
     console.error("Invalid userInfo in Chat Area localStorage", e);
     currentUser = null;
@@ -30,7 +31,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
     try {
       const users = currentUser;
 
-      console.log("getCurrentUser", users);
+      // console.log("getCurrentUser", users);
       return users;
     } catch (e) {
       console.error("Invalid userInfo", e);
@@ -43,7 +44,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
     try {
       // const storedUser = localStorage.getItem("userContext");
       currentUser = userContext.user ? userContext.user : null;
-      console.log("CurrentUser from Chat Area:", currentUser);
+      // console.log("CurrentUser from Chat Area:", currentUser);
     } catch (e) {
       console.error("Invalid userInfo in Chat Area localStorage", e);
       currentUser = null;
@@ -53,7 +54,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
 
     try {
       const { data } = await axios.get(
-        `https://mern-chat-backend-lso1.onrender.com/api/messages/${selectedGroup._id}`,
+        `${URL}/api/messages/${selectedGroup._id}`,
         {
           headers: { Authorization: `Bearer ${user.token}` },
         }
@@ -76,7 +77,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
       });
 
       socket.on("users in room", (users) => {
-        console.log("users in room", users);
+        // console.log("users in room", users);
         setConnectedUsers(users);
       });
 
@@ -118,10 +119,10 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
         socket.off("user left");
         socket.off("notification");
         socket.off("user typing");
-        socket.off("user stop typing");
+        socket.off("stop typing");
       };
     }
-  }, [selectedGroup, socket, setSelectedGroup, messages]);
+  }, [selectedGroup, socket, setSelectedGroup]);
 
   const formatTime = (dateStr) => {
     try {
@@ -137,10 +138,10 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
     if (!user || !selectedGroup) return;
     if (!newMessage.trim()) return;
 
-    console.log("from sent message", user.token);
+    // console.log("from sent message", user.token);
     try {
       const { data } = await axios.post(
-        `https://mern-chat-backend-lso1.onrender.com/api/messages`,
+        `${URL}/api/messages`,
         {
           sender: user._id,
           content: newMessage,
@@ -151,7 +152,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
         }
       );
 
-      console.log("data from selected Group..", data);
+      // console.log("data from selected Group..", data);
       socket.emit("new message", { ...data, groupId: selectedGroup._id });
       setMessages((prev) => [...prev, data]);
       setNewMessage("");
@@ -179,7 +180,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
 
     typingTimeoutRef.current = setTimeout(() => {
       if (selectedGroup) {
-        socket.emit("stop typing", { groupId: selectedGroup._td });
+        socket.emit("stop typing", { groupId: selectedGroup._id });
       }
       setIsTyping(false);
     }, 2000);
@@ -207,7 +208,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
     >
       {/* Chat Area */}
       <div
-        className="flex-grow-1 d-flex flex-column bg-light"
+        className="flex-grow-1 d-flex flex-column bg-light chat-container"
         style={{ maxWidth: "100%" }}
       >
         {/* Chat Header */}
@@ -317,7 +318,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup }) => {
             </div>
 
             {/* Input Area */}
-            <div className="p-3 bg-white border-top">
+            <div className="p-3 bg-white border-top input-container">
               <div className="input-group input-group-lg">
                 <input
                   type="text"

@@ -13,10 +13,11 @@ import AiGenerater from "./Ai";
 function App() {
   let [user, setUser] = useState({
     isLoggedIn: false,
-    _id: null,
     username: null,
+    _id: null,
     email: null,
     token: null,
+    isAdmin: null,
   });
   return (
     <UserContext.Provider value={{ user, setUser }}>

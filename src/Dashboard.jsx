@@ -8,7 +8,7 @@ let Dashboard = () => {
   }, []);
 
   let userContext = useContext(UserContext);
-  console.log("UserContext in Dashboard:", userContext);
+  // console.log("UserContext in Dashboard:", userContext);
 
   return (
     <div>
@@ -17,8 +17,8 @@ let Dashboard = () => {
         <div>
           <h2>
             Welcome, {userContext.user.username}! to{" "}
-            <NavLink to="/chat">RT-Chat</NavLink>
-            <NavLink to="/AiGenerater">RT-Chat</NavLink>
+            <NavLink to="/chat">RT-Chat </NavLink>
+            <NavLink to="/AiGenerater">.... AI RT-Content Generator</NavLink>
           </h2>
           <p>Your email: {userContext.user.email}</p>
         </div>

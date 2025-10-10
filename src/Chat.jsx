@@ -3,8 +3,8 @@ import ChatArea from "./ChatArea";
 import io from "socket.io-client";
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "./UserContext";
-
-const ENDPOINT = "https://mern-chat-backend-lso1.onrender.com";
+import URL from "./Url";
+//const ENDPOINT = "https://mern-chat-backend-lso1.onrender.com";
 
 const Chat = () => {
   const [selectedGroup, setSelectedGroup] = useState(null);
@@ -13,7 +13,7 @@ const Chat = () => {
   useEffect(() => {
     // console.log("user from chat", userContext.user);
     // const userInfo = JSON.parse(localStorage.getItem("UserContext") || "{}");
-    const newSocket = io(ENDPOINT, {
+    const newSocket = io(`${URL}`, {
       auth: { user: userContext.user },
     });
     // console.log("Socket connected:", newSocket);
@@ -23,7 +23,7 @@ const Chat = () => {
         newSocket.disconnect();
       }
     };
-  }, [socket, userContext]);
+  }, []);
 
   return (
     <div className="container-fluid vh-100">

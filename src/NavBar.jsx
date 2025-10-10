@@ -129,7 +129,7 @@ let NavBar = () => {
           {userContext.user.isLoggedIn ? (
             <div style={{ marginRight: 100 }}>
               <ul className="navbar-nav">
-                <li className="nav-item dropdown">
+                <li className="nav-item dropdown z-100">
                   <NavLink
                     className="nav-link dropdown-toggle"
                     to="#"
@@ -143,7 +143,7 @@ let NavBar = () => {
                   </NavLink>
 
                   <div
-                    className="dropdown-menu"
+                    className="dropdown-menu textarea"
                     aria-labelledby="navbarDropdown"
                   >
                     <NavLink
